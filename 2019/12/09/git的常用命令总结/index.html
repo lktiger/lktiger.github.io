@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | lktiger的博客</title>
+  <title>git的常用命令总结 | lktiger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。 本文通过开发过程中的场景对Git的常用命令进行总结。  本文所用Git版本：git version 2.22.0.windows.1  克隆项目一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把h">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;01&#x2F;hello-world&#x2F;index.html">
+<meta property="og:title" content="git的常用命令总结">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;09&#x2F;git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93&#x2F;index.html">
 <meta property="og:site_name" content="lktiger的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。 本文通过开发过程中的场景对Git的常用命令进行总结。  本文所用Git版本：git version 2.22.0.windows.1  克隆项目一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把h">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-01T13:32:12.723Z">
+<meta property="og:updated_time" content="2019-12-10T07:59:43.515Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="lktiger的博客" type="application/atom+xml">
@@ -144,39 +145,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-git的常用命令总结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      git的常用命令总结
     </h1>
   
 
         
-        <a href="/2019/12/01/hello-world/" class="archive-article-date">
-  	<time datetime="2019-12-01T13:32:12.723Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-01</time>
+        <a href="/2019/12/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="archive-article-date">
+  	<time datetime="2019-12-09T03:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure>
+        <p>作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。</p>
+<p>本文通过开发过程中的场景对Git的常用命令进行总结。</p>
+<blockquote>
+<p><strong><em>本文所用Git版本：git version 2.22.0.windows.1</em></strong></p>
+</blockquote>
+<h2 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h2><p>一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把<strong><a href="https://helloworld.git" target="_blank" rel="noopener">https://helloworld.git</a></strong>主机上的<strong><code>dev</code></strong>分支clone下来！</p>
+<p>你收到消息之后虽然忍不住口吐芬芳：我fffff…佛慈悲，但还是乖乖的打开git bash，心想：这个简单，分分钟搞定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git clone -b dev https:&#x2F;&#x2F;helloworld.git</span></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure>
+<p>可你虽然想的是对的，但是输入的时候情不自禁地又去想到刚才摸鱼的事，思绪飞到了九霄云外，不小心习惯性的输入了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git clone https:&#x2F;&#x2F;helloworld.git</span></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure>
+<p>并且执行了，克隆下来一个helloworld文件夹。</p>
+<blockquote>
+<p>当你从远程仓库克隆时，实际上Git自动把本地的<code>master</code>分支和远程的<code>master</code>分支关联起来了，并且，远程仓库的默认名称是<code>origin</code> </p>
+</blockquote>
+<p>等你反应过来的时候，心想：多大点事儿，<code>master</code>分支克隆下来也无妨，再把<code>dev</code>分支克隆下来就行了：</p>
+<blockquote>
+<p>注意：此时已经克隆下来了一个文件夹，因此该文件夹才是一个Git仓库，你需要进入该文件夹下进行克隆分支的操作。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cd helloworld</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure>
+<blockquote>
+<p>以上的命令是在远程仓库的<code>dev</code>分支已经存在，而本地没有建立<code>dev</code>分支的情况下执行的命令，执行之后自动将本地<code>dev</code>分支与远程<code>dev</code>分支关联。</p>
+<p>小伙伴们在github上自己建仓库练习克隆分支的时候，需要确保你本地的分支被推送到了远程。以下通过先建本地仓库，再关联远程仓库的方式实现另一种克隆项目的方法：</p>
+<p>先初始化一个本地仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git init</span></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>关联在github上创建的远程仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git remote add origin https:&#x2F;&#x2F;github.com&#x2F;aaa&#x2F;helloworld.git</span></pre></td></tr></table></figure>
+
+<p>然后拉取代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+<p>执行了上面这一步之后，当你用<code>git branch</code>查看分支的时候却发现一个分支都没有（wtf??），但实际上origin主机上的所有分支都被克隆下来了（当然由于是新建的仓库，只有master分支），不信你可以切换过去看看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout master</span></pre></td></tr></table></figure>
+
+<p>这时候再执行<code>git branch</code>，是不是能看到分支了？</p>
+</blockquote>
+<p>这时候你的领导觉得这个项目确实比较紧，于是让你的一个同事过来和你一起开发，然后你的同事在<code>dev</code>分支上新建了一个<code>feature-1</code>分支并推送到了远程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push -u origin feature-1</span></pre></td></tr></table></figure>
+
+<p>你要把这个<code>feature-1</code>分支抓取下来，并和本地的<code>feature-1</code>分支关联上，怎么做呢？</p>
+<p>有以下2种方法：</p>
+<ol>
+<li><p><strong>先把最新的提交拉下来</strong>（这一步非常重要）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+<p>然后切换并关联分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout feature-1</span></pre></td></tr></table></figure>
+
+<p>是不是很熟悉呢？没错，之前克隆的时候用过这命令，可以自动关联相应的分支。</p>
+</li>
+<li><p>同样地，先将最新提交拉取下来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+<p>建一个分支并切换过去（注意是在<code>dev</code>分支上执行这个命令，要和远程的分支结构一致）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-1</span></pre></td></tr></table></figure>
+
+<p>然后关联本地和远程分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch --set-upstream-to origin&#x2F;feature-1 feature-1</span></pre></td></tr></table></figure>
+
+<p>然后拉取feature-1分支上的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h2 id="管理修改与版本回退"><a href="#管理修改与版本回退" class="headerlink" title="管理修改与版本回退"></a>管理修改与版本回退</h2><p>OK！到这一步分支就克隆下来了，你兴冲冲地开始开发，搞定之后，你正想添加到暂存区，但是由于你之前又去想摸鱼的事情，突然发现不小心把其他开发者的<strong>src/main/java/util/a.java</strong>文件修改乱了（或者删掉了），然而你走路嚣张，丝毫不慌：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -- src&#x2F;main&#x2F;java&#x2F;util&#x2F;a.java</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>上面这条命令的作用就是让<code>a.java</code>回到最近一次<code>git commit</code>或<code>git add</code>时的状态</strong> </p>
+</blockquote>
+<p>执行之后你发现<strong><code>a.java</code></strong>文件回来了，于是你放心地将所有新增和修改添加到暂存区：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git add .</span></pre></td></tr></table></figure>
+
+<p>然而俗话说得好：摸鱼一时爽，一直摸鱼一直爽。</p>
+<p>上面的命令执行完之后你发现之前还有个其他开发者的<strong>src/main/java/util/b.java</strong>文件被你修改乱了，并且添加到了暂存区！于是你赶紧执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset HEAD src&#x2F;main&#x2F;java&#x2F;util&#x2F;b.java</span></pre></td></tr></table></figure>
+
+<p>将<strong><code>b.java</code></strong>文件在暂存区的修改撤销掉，然后再执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -- src&#x2F;main&#x2F;java&#x2F;util&#x2F;b.java</span></pre></td></tr></table></figure>
+
+<p>撤销工作区的修改。完成之后你长舒一口气，这下总可以提交了吧？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;本次提交注释信息&quot;</span></pre></td></tr></table></figure>
+
+<p>好事多磨，执行上面的命令之后，你发现你还将其他开发者的<strong>src/main/java/util/c.java</strong>文件不小心修改了，并且已经提交！wtf？你心想还好没有推送到远程仓库，马上执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<del>和版本数字，如上100个版本写成`HEAD</del>100` </p>
+</li>
+<li><p>有时候提交的版本有点多你并不知道需要回退到哪个版本，可以通过<code>git log</code>查看提交历史，复制版本号前几位，如<strong>b354h</strong>，然后执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
+</li>
+<li><p>Git在回退之后也可以重返到未回退之前的版本，可以通过<code>git reflog</code>查看命令历史，同样的复制版本号前几位，执行上面的命令即可。</p>
+</li>
+</ul>
+</blockquote>
+<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，心想：删掉这个文件就可以了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git rm src&#x2F;main&#x2F;webapp&#x2F;d.txt</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：上面的命令只是将要删掉文件这一步添加到暂存区，还未提交之前文件并没有从远程仓库删除</p>
+</blockquote>
+<p>虽然你想的是挺美的，但是摸鱼使你眼神飘忽，不小心把<strong>d.txt</strong>打成了<strong>e.txt</strong>，于是将删除<strong>e.txt</strong>添加到了暂存区。怎么撤销暂存区的修改呢？前面有这条命令哦。</p>
+<p>当然，最后你还是不小心提交了（摸鱼嘛，你懂的），这时候参考版本回退的命令就可以了。</p>
+<h2 id="关于分支"><a href="#关于分支" class="headerlink" title="关于分支"></a>关于分支</h2><p>你正在风风火火地进行开发，然而你的领导突然又发来一条信息：小张啊，这个项目另一个地方有个bug需要紧急修改一下，今天之内必须搞定，你手里的开发工作先放一下，先把bug改了！</p>
+<p>于是你心里顿时一万头神兽在奔腾，手里的工作刚进行到一半，功能没完成，提交也不太好，不提交又不能切换分支，怎么办呢？</p>
+<blockquote>
+<p>tips:</p>
+<p>之前已经提到了创建并切换到分支<strong><code>dev</code></strong>的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b dev</span></pre></td></tr></table></figure>
+
+<p>上面的命令相当于2条命令：</p>
+<ul>
+<li>创建分支：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch dev</span></pre></td></tr></table></figure>
+
+<ul>
+<li>切换分支：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
+
+<p>如果要查看分支，执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch</span></pre></td></tr></table></figure>
+
+<p>如果要将<strong><code>dev</code></strong>分支合并到<strong><code>master</code></strong>分支上，先切换到<strong><code>master</code></strong>分支，再使用merge合并：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout master</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git merge dev</span></pre></td></tr></table></figure>
+
+<p>删除分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch -d dev</span></pre></td></tr></table></figure>
+
+<p>强制删除分支（在分支未合并的时候就删除）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch -D dev</span></pre></td></tr></table></figure>
+
+<p>上面2条命令是删除本地分支，若要删除远程分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push --delete origin dev</span></pre></td></tr></table></figure>
+</blockquote>
+<p>幸好啊，Git有一个<code>stash</code>功能，可以将你的工作现场保存起来，这样你就可以新建一个分支去处理bug了！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash</span></pre></td></tr></table></figure>
+
+<p>执行后用<code>git status</code>查看工作区，发现已经是干净的了！于是在<code>dev</code>分支创建临时分支<code>issue-1</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b issue-1</span></pre></td></tr></table></figure>
+
+<p>然后修改完成，执行提交并合并分支之后，是时候回到<code>dev</code>分支继续刚才的工作了！</p>
+<p>查看工作现场：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash list</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">stash@&#123;0&#125;: WIP on dev: s02ec7 solve bug</span></pre></td></tr></table></figure>
+
+<p>恢复工作现场有2中方法：</p>
+<ul>
+<li>用<code>git stash apply</code>，恢复之后stash的内容并不删除，通过<code>git stash drop</code>手动删除</li>
+<li>用<code>git stash pop</code>，恢复的同时删除stash的内容</li>
+</ul>
+<p>如果多次stash，可以指定恢复的工作现场：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash apply stash@&#123;0&#125;</span></pre></td></tr></table></figure>
+
+<p>历经千辛万苦，终于开发完了！你长舒一口气~~</p>
+<p>嗯，是时候继续摸鱼了。</p>
+<p>文 | lktiger</p>
 
       
 
@@ -206,6 +358,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -256,7 +419,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/01/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -270,15 +433,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          聊聊js的执行机制
-        
-      </div>
-    </a>
   
+    <a href="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">聊聊js的执行机制</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

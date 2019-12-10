@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>my blog</title>
+  <title>lktiger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="my blog">
+<meta property="og:title" content="lktiger的博客">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
-<meta property="og:site_name" content="my blog">
+<meta property="og:site_name" content="lktiger的博客">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternative" href="/atom.xml" title="my blog" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lktiger的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -42,7 +42,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/head_protrait.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">lktiger</a></h1>
@@ -76,13 +76,9 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/lktiger" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+					<a class="mail" target="_blank" href="/zhforworkdemand@sina.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -100,7 +96,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/head_protrait.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">lktiger</h1>
@@ -117,13 +113,9 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/lktiger" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-			        
-						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-			        
-						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+						<a class="mail" target="_blank" href="/zhforworkdemand@sina.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -150,6 +142,380 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-git的常用命令总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/">git的常用命令总结</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="archive-article-date">
+  	<time datetime="2019-12-09T03:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。</p>
+<p>本文通过开发过程中的场景对Git的常用命令进行总结。</p>
+<blockquote>
+<p><strong><em>本文所用Git版本：git version 2.22.0.windows.1</em></strong></p>
+</blockquote>
+<h2 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h2><p>一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把<strong><a href="https://helloworld.git" target="_blank" rel="noopener">https://helloworld.git</a></strong>主机上的<strong><code>dev</code></strong>分支clone下来！</p>
+<p>你收到消息之后虽然忍不住口吐芬芳：我fffff…佛慈悲，但还是乖乖的打开git bash，心想：这个简单，分分钟搞定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git clone -b dev https:&#x2F;&#x2F;helloworld.git</span></pre></td></tr></table></figure>
+
+<p>可你虽然想的是对的，但是输入的时候情不自禁地又去想到刚才摸鱼的事，思绪飞到了九霄云外，不小心习惯性的输入了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git clone https:&#x2F;&#x2F;helloworld.git</span></pre></td></tr></table></figure>
+
+<p>并且执行了，克隆下来一个helloworld文件夹。</p>
+<blockquote>
+<p>当你从远程仓库克隆时，实际上Git自动把本地的<code>master</code>分支和远程的<code>master</code>分支关联起来了，并且，远程仓库的默认名称是<code>origin</code> </p>
+</blockquote>
+<p>等你反应过来的时候，心想：多大点事儿，<code>master</code>分支克隆下来也无妨，再把<code>dev</code>分支克隆下来就行了：</p>
+<blockquote>
+<p>注意：此时已经克隆下来了一个文件夹，因此该文件夹才是一个Git仓库，你需要进入该文件夹下进行克隆分支的操作。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ cd helloworld</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以上的命令是在远程仓库的<code>dev</code>分支已经存在，而本地没有建立<code>dev</code>分支的情况下执行的命令，执行之后自动将本地<code>dev</code>分支与远程<code>dev</code>分支关联。</p>
+<p>小伙伴们在github上自己建仓库练习克隆分支的时候，需要确保你本地的分支被推送到了远程。以下通过先建本地仓库，再关联远程仓库的方式实现另一种克隆项目的方法：</p>
+<p>先初始化一个本地仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git init</span></pre></td></tr></table></figure>
+
+<p>关联在github上创建的远程仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git remote add origin https:&#x2F;&#x2F;github.com&#x2F;aaa&#x2F;helloworld.git</span></pre></td></tr></table></figure>
+
+<p>然后拉取代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+<p>执行了上面这一步之后，当你用<code>git branch</code>查看分支的时候却发现一个分支都没有（wtf??），但实际上origin主机上的所有分支都被克隆下来了（当然由于是新建的仓库，只有master分支），不信你可以切换过去看看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout master</span></pre></td></tr></table></figure>
+
+<p>这时候再执行<code>git branch</code>，是不是能看到分支了？</p>
+</blockquote>
+<p>这时候你的领导觉得这个项目确实比较紧，于是让你的一个同事过来和你一起开发，然后你的同事在<code>dev</code>分支上新建了一个<code>feature-1</code>分支并推送到了远程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push -u origin feature-1</span></pre></td></tr></table></figure>
+
+<p>你要把这个<code>feature-1</code>分支抓取下来，并和本地的<code>feature-1</code>分支关联上，怎么做呢？</p>
+<p>有以下2种方法：</p>
+<ol>
+<li><p><strong>先把最新的提交拉下来</strong>（这一步非常重要）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+<p>然后切换并关联分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout feature-1</span></pre></td></tr></table></figure>
+
+<p>是不是很熟悉呢？没错，之前克隆的时候用过这命令，可以自动关联相应的分支。</p>
+</li>
+<li><p>同样地，先将最新提交拉取下来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+<p>建一个分支并切换过去（注意是在<code>dev</code>分支上执行这个命令，要和远程的分支结构一致）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-1</span></pre></td></tr></table></figure>
+
+<p>然后关联本地和远程分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch --set-upstream-to origin&#x2F;feature-1 feature-1</span></pre></td></tr></table></figure>
+
+<p>然后拉取feature-1分支上的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h2 id="管理修改与版本回退"><a href="#管理修改与版本回退" class="headerlink" title="管理修改与版本回退"></a>管理修改与版本回退</h2><p>OK！到这一步分支就克隆下来了，你兴冲冲地开始开发，搞定之后，你正想添加到暂存区，但是由于你之前又去想摸鱼的事情，突然发现不小心把其他开发者的<strong>src/main/java/util/a.java</strong>文件修改乱了（或者删掉了），然而你走路嚣张，丝毫不慌：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -- src&#x2F;main&#x2F;java&#x2F;util&#x2F;a.java</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>上面这条命令的作用就是让<code>a.java</code>回到最近一次<code>git commit</code>或<code>git add</code>时的状态</strong> </p>
+</blockquote>
+<p>执行之后你发现<strong><code>a.java</code></strong>文件回来了，于是你放心地将所有新增和修改添加到暂存区：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git add .</span></pre></td></tr></table></figure>
+
+<p>然而俗话说得好：摸鱼一时爽，一直摸鱼一直爽。</p>
+<p>上面的命令执行完之后你发现之前还有个其他开发者的<strong>src/main/java/util/b.java</strong>文件被你修改乱了，并且添加到了暂存区！于是你赶紧执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset HEAD src&#x2F;main&#x2F;java&#x2F;util&#x2F;b.java</span></pre></td></tr></table></figure>
+
+<p>将<strong><code>b.java</code></strong>文件在暂存区的修改撤销掉，然后再执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -- src&#x2F;main&#x2F;java&#x2F;util&#x2F;b.java</span></pre></td></tr></table></figure>
+
+<p>撤销工作区的修改。完成之后你长舒一口气，这下总可以提交了吧？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;本次提交注释信息&quot;</span></pre></td></tr></table></figure>
+
+<p>好事多磨，执行上面的命令之后，你发现你还将其他开发者的<strong>src/main/java/util/c.java</strong>文件不小心修改了，并且已经提交！wtf？你心想还好没有推送到远程仓库，马上执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<del>和版本数字，如上100个版本写成`HEAD</del>100` </p>
+</li>
+<li><p>有时候提交的版本有点多你并不知道需要回退到哪个版本，可以通过<code>git log</code>查看提交历史，复制版本号前几位，如<strong>b354h</strong>，然后执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
+</li>
+<li><p>Git在回退之后也可以重返到未回退之前的版本，可以通过<code>git reflog</code>查看命令历史，同样的复制版本号前几位，执行上面的命令即可。</p>
+</li>
+</ul>
+</blockquote>
+<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，心想：删掉这个文件就可以了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git rm src&#x2F;main&#x2F;webapp&#x2F;d.txt</span></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：上面的命令只是将要删掉文件这一步添加到暂存区，还未提交之前文件并没有从远程仓库删除</p>
+</blockquote>
+<p>虽然你想的是挺美的，但是摸鱼使你眼神飘忽，不小心把<strong>d.txt</strong>打成了<strong>e.txt</strong>，于是将删除<strong>e.txt</strong>添加到了暂存区。怎么撤销暂存区的修改呢？前面有这条命令哦。</p>
+<p>当然，最后你还是不小心提交了（摸鱼嘛，你懂的），这时候参考版本回退的命令就可以了。</p>
+<h2 id="关于分支"><a href="#关于分支" class="headerlink" title="关于分支"></a>关于分支</h2><p>你正在风风火火地进行开发，然而你的领导突然又发来一条信息：小张啊，这个项目另一个地方有个bug需要紧急修改一下，今天之内必须搞定，你手里的开发工作先放一下，先把bug改了！</p>
+<p>于是你心里顿时一万头神兽在奔腾，手里的工作刚进行到一半，功能没完成，提交也不太好，不提交又不能切换分支，怎么办呢？</p>
+<blockquote>
+<p>tips:</p>
+<p>之前已经提到了创建并切换到分支<strong><code>dev</code></strong>的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b dev</span></pre></td></tr></table></figure>
+
+<p>上面的命令相当于2条命令：</p>
+<ul>
+<li>创建分支：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch dev</span></pre></td></tr></table></figure>
+
+<ul>
+<li>切换分支：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
+
+<p>如果要查看分支，执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch</span></pre></td></tr></table></figure>
+
+<p>如果要将<strong><code>dev</code></strong>分支合并到<strong><code>master</code></strong>分支上，先切换到<strong><code>master</code></strong>分支，再使用merge合并：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout master</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git merge dev</span></pre></td></tr></table></figure>
+
+<p>删除分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch -d dev</span></pre></td></tr></table></figure>
+
+<p>强制删除分支（在分支未合并的时候就删除）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch -D dev</span></pre></td></tr></table></figure>
+
+<p>上面2条命令是删除本地分支，若要删除远程分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push --delete origin dev</span></pre></td></tr></table></figure>
+</blockquote>
+<p>幸好啊，Git有一个<code>stash</code>功能，可以将你的工作现场保存起来，这样你就可以新建一个分支去处理bug了！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash</span></pre></td></tr></table></figure>
+
+<p>执行后用<code>git status</code>查看工作区，发现已经是干净的了！于是在<code>dev</code>分支创建临时分支<code>issue-1</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b issue-1</span></pre></td></tr></table></figure>
+
+<p>然后修改完成，执行提交并合并分支之后，是时候回到<code>dev</code>分支继续刚才的工作了！</p>
+<p>查看工作现场：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash list</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">stash@&#123;0&#125;: WIP on dev: s02ec7 solve bug</span></pre></td></tr></table></figure>
+
+<p>恢复工作现场有2中方法：</p>
+<ul>
+<li>用<code>git stash apply</code>，恢复之后stash的内容并不删除，通过<code>git stash drop</code>手动删除</li>
+<li>用<code>git stash pop</code>，恢复的同时删除stash的内容</li>
+</ul>
+<p>如果多次stash，可以指定恢复的工作现场：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash apply stash@&#123;0&#125;</span></pre></td></tr></table></figure>
+
+<p>历经千辛万苦，终于开发完了！你长舒一口气~~</p>
+<p>嗯，是时候继续摸鱼了。</p>
+<p>文 | lktiger</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-聊聊js的执行机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">聊聊js的执行机制</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
+  	<time datetime="2019-12-03T07:01:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>注：本文通过一部分网上博客内容总结，再加上自己的理解而来，如有不对或不清楚的地方，欢迎斧正</p>
+</blockquote>
+<p>参考文章链接： </p>
+<p><a href="https://juejin.im/post/5b498d245188251b193d4059" target="_blank" rel="noopener">https://juejin.im/post/5b498d245188251b193d4059</a></p>
+<p><a href="https://juejin.im/post/5db556376fb9a0207a6ddce7" target="_blank" rel="noopener">https://juejin.im/post/5db556376fb9a0207a6ddce7</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前对于js的执行机制并没有什么细致的了解，自以为代码从上到下执行，同步异步分开，其他没有什么值得探寻的。后来仔细研究了一下，发现还是暗藏玄机啊。嗯，下面谈谈自己的理解。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>话不多说，咱们先来看一段代码，说出以下代码的打印顺序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> async2();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">async1();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">6</span>);</span></pre></td></tr></table></figure>
+
+<p>正确的答案是依次打印 1,2,6,4,3,5 ，如果你的答案是正确的，那么你已经理解本文接下来的内容了，也就不必浪费时间阅读这篇文章了。</p>
+<p>关于js执行机制，先要从同步和异步说起。</p>
+<hr>
+<h3 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h3><p><strong>同步</strong>的概念很好理解，用函数来举例的话，如果一个函数在返回的时候，调用者就能够得到预期的结果，那么这个函数就是同步的。</p>
+<p>举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().getTime()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>)</span></pre></td></tr></table></figure>
+
+<ul>
+<li>第一句代码返回时拿到了返回值毫秒数，得到了预期的结果，是同步的。</li>
+<li>第二局代码在控制台打印1，也得到了预期的效果，是同步的。</li>
+</ul>
+<p>类比<strong>同步</strong>的话，<strong>异步</strong>也就很好理解了，如果函数返回的时候，调用者并不能够拿到预期的结果，而是要在将来通过其他的一些手段来得到（如回调函数），那么这个函数就是<strong>异步</strong>的。</p>
+<p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;,<span class="number">2000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    url:www.baidu.com,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    data:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    success:<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
+
+<p>代码1-3行是一个定时器，延时2秒打印数字1，在执行返回的时候并不能立刻打印，显然是异步的。下面的代码是一个简单的ajax请求，在发送请求之后并不会得到预期结果，请求的发送和处理需要时间，我们也不知道这个请求是成功还是失败，只能通过回调函数使之在成功的时候打印字符串，也是异步的。</p>
+<p><strong>那么js是怎么执行同步和异步任务的呢？</strong></p>
+<p>如下图：</p>
+<p><img src="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5.png" alt="同步异步"></p>
+<ul>
+<li>同步任务和异步任务是在不同的环境执行的，同步任务在主线程执行，异步任务进入Event Table并注册它的回调函数。看到这里可能有人比较疑惑，js不是单线程的吗，这个主线程是啥意思啊？我们都知道js是运行在浏览器中的语言，而浏览器是多进程的，js引擎线程运行在其中的渲染进程，这个进程除了js引擎线程之外，还包括了GUI渲染线程、事件触发线程、定时触发器线程以及异步http请求线程，<strong>所谓的单线程，实际是指js引擎中负责解释和执行js代码的线程只有一个，称之为主线程</strong>。</li>
+<li>在异步任务完成后，此时它的回调函数并没有执行，而是被放入Event Queue中等待同步任务执行完成之后才会按顺序进入主线程执行。</li>
+<li>这个过程不断重复，称之为事件循环(Event Loop)。</li>
+</ul>
+<p>来看个代码吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;,<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>)</span></pre></td></tr></table></figure>
+
+<p>这段代码的打印顺序是1，0</p>
+<p>你可能会不明白<code>setTimeout(fn,0)</code>的含义，延时0秒难道不是马上执行吗？实际上从上述对图片的解读已经可以得出答案：<code>setTimeout(fn,0)</code>在延时0秒后将函数<code>fn</code>放入Event Queue中，接下来会等待同步任务<code>console.log(1)</code>执行完成之后才会执行Event Queue中的回调函数，打印数字0</p>
+<p>那么现在你已经对js的执行顺序有了初步了解。</p>
+<hr>
+<h3 id="微任务-Microtasks-和宏任务-Macrotask"><a href="#微任务-Microtasks-和宏任务-Macrotask" class="headerlink" title="微任务(Microtasks)和宏任务(Macrotask)"></a>微任务(Microtasks)和宏任务(Macrotask)</h3><p>首先明确这俩都是异步任务，区别在于执行顺序，话不多说直接看图：</p>
+<p><img src="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%AE%8F%E4%BB%BB%E5%8A%A1.png" alt="微任务宏任务"></p>
+<p>在分析的时候可以将回调函数与任务本身区别开来，如上图所示，在异步任务中先执行宏任务（注意此时宏任务的回调函数并没有执行，而是被注册到Event Queue），然后执行所有的微任务（清空微任务队列，包括被注册到Event Queue的回调函数，注意微任务的队列和宏任务的队列并不是同一个），然后再执行宏任务的回调，如此循环下去。</p>
+<blockquote>
+<p><em>常见的宏任务：异步的整体代码script、setTimeout、setInterval、setImmediate。</em></p>
+<p><em>常见的微任务：原生Promise、process.nextTick、MutationObserver。</em></p>
+</blockquote>
+<p>如果再将同步考虑进来的话，那么执行顺序就是</p>
+<ul>
+<li>同步任务（同步任务执行的同时异步任务也在异步请求线程执行，先执行宏任务再执行微任务）</li>
+<li>微任务的回调（宏任务执行完成之后要清空微任务队列）</li>
+<li>宏任务的回调</li>
+</ul>
+<p>如此往复循环下去。</p>
+<p>还是再看个代码吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;,<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise1'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  resolve()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">p.then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise2'</span>)    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">123</span>)</span></pre></td></tr></table></figure>
+
+<p><strong>这个例子的打印顺序是Promise1，123，Promise2，setTimeout1</strong></p>
+<p>上面的代码涉及到Promise的一个知识点： <strong>Promise 一经创建就会立即执行</strong>。这样看来Promise()内部的代码就相当于是同步了，而then()内部的代码仍然是异步（微任务）。</p>
+<p>因此，首先打印Promise1，然后执行同步任务，打印123，接下来setTimeout()的回调函数setTimeout1被放入宏任务的任务队列，Promise的回调函数函数Promise2被放入微任务的任务队列，然后清空微任务队列，打印Promise2，最后打印setTimeout1。</p>
+<p>至此，js的执行机制也解释的差不多了，再回去看看文章开头那个问题呢？</p>
+<p>只需要注意async返回的是一个Promise，await后面的代码从下一句开始相当于放在Promise的then()中执行。</p>
+<p>相信你一定能得出正确答案。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/03/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -317,6 +683,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">git</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
