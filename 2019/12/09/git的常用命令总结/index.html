@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="lktiger的博客">
 <meta property="og:description" content="作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。 本文通过开发过程中的场景对Git的常用命令进行总结。  本文所用Git版本：git version 2.22.0.windows.1  克隆项目一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把h">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-11T01:20:37.627Z">
+<meta property="og:updated_time" content="2019-12-11T01:48:59.688Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="lktiger的博客" type="application/atom+xml">
@@ -179,7 +179,7 @@
 
 <p>并且执行了，克隆下来一个helloworld文件夹。</p>
 <blockquote>
-<p>当你从远程仓库克隆时，实际上Git自动把本地的<code>master</code>分支和远程的<code>master</code>分支关联起来了，并且，远程仓库的默认名称是<code>origin</code> </p>
+<p>当你从远程仓库克隆时，实际上Git自动把本地的分支和远程的分支关联起来了，并且远程仓库的默认名称是<code>origin</code> </p>
 </blockquote>
 <p>等你反应过来的时候，心想：多大点事儿，<code>master</code>分支克隆下来也无妨，再把<code>dev</code>分支克隆下来就行了：</p>
 <blockquote>
@@ -188,8 +188,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> helloworld</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
 
 <blockquote>
-<p>以上的命令是在远程仓库的<code>dev</code>分支已经存在，而本地没有建立<code>dev</code>分支的情况下执行的命令，执行之后自动将本地<code>dev</code>分支与远程<code>dev</code>分支关联。</p>
-<p>小伙伴们在github上自己建仓库练习克隆分支的时候，需要确保你本地的分支被推送到了远程。以下通过先建本地仓库，再关联远程仓库的方式实现另一种克隆项目的方法：</p>
+<p>只要是远程存在的分支，克隆下来之后执行上面的<code>git checkout</code>指令不但可以在本地创建同名分支并自动与远程对应分支关联，而且会切换到该分支（默认是在<code>master</code>分支）。</p>
+<p>以下通过先建本地仓库，再关联远程仓库的方式实现另一种克隆项目的方法：</p>
 <p>先初始化一个本地仓库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git init</span></pre></td></tr></table></figure>
 
@@ -207,7 +207,10 @@
 <p>这时候你的领导觉得这个项目确实比较紧，于是让你的一个同事过来和你一起开发，然后你的同事在<code>dev</code>分支上新建了一个<code>feature-1</code>分支并推送到了远程：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push -u origin feature-1</span></pre></td></tr></table></figure>
 
-<p>你要把这个<code>feature-1</code>分支抓取下来，并和本地的<code>feature-1</code>分支关联上，怎么做呢？</p>
+<blockquote>
+<p>小伙伴们在github上自己建仓库练习克隆分支的时候，需要确保你本地的分支被推送到了远程（执行上面的命令），然后再新建一个文件夹将远程仓库克隆下来。</p>
+</blockquote>
+<p>于是你要把这个<code>feature-1</code>分支抓取下来，并和本地的<code>feature-1</code>分支关联上，怎么做呢？</p>
 <p>有以下2种方法：</p>
 <ol>
 <li><p><strong>先把最新的提交拉下来</strong>（这一步非常重要）：</p>
