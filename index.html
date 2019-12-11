@@ -256,10 +256,10 @@
 
 <blockquote>
 <ul>
-<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<del>和版本数字，如上100个版本写成`HEAD</del>100` </p>
+<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<code>~</code>和版本数字，如上100个版本写成<code>HEAD~100</code> </p>
 </li>
 <li><p>有时候提交的版本有点多你并不知道需要回退到哪个版本，可以通过<code>git log</code>查看提交历史，复制版本号前几位，如<strong>b354h</strong>，然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
 </li>
 <li><p>Git在回退之后也可以重返到未回退之前的版本，可以通过<code>git reflog</code>查看命令历史，同样的复制版本号前几位，执行上面的命令即可。</p>
 </li>

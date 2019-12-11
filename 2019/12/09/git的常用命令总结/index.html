@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="lktiger的博客">
 <meta property="og:description" content="作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。 本文通过开发过程中的场景对Git的常用命令进行总结。  本文所用Git版本：git version 2.22.0.windows.1  克隆项目一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把h">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-10T08:27:53.985Z">
+<meta property="og:updated_time" content="2019-12-11T01:14:08.205Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="lktiger的博客" type="application/atom+xml">
@@ -258,10 +258,10 @@
 
 <blockquote>
 <ul>
-<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<del>和版本数字，如上100个版本写成`HEAD</del>100` </p>
+<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<code>~</code>和版本数字，如上100个版本写成<code>HEAD~100</code> </p>
 </li>
 <li><p>有时候提交的版本有点多你并不知道需要回退到哪个版本，可以通过<code>git log</code>查看提交历史，复制版本号前几位，如<strong>b354h</strong>，然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
 </li>
 <li><p>Git在回退之后也可以重返到未回退之前的版本，可以通过<code>git reflog</code>查看命令历史，同样的复制版本号前几位，执行上面的命令即可。</p>
 </li>
