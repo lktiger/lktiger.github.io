@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="lktiger的博客">
 <meta property="og:description" content="作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。 本文通过开发过程中的场景对Git的常用命令进行总结。  本文所用Git版本：git version 2.22.0.windows.1  克隆项目一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把h">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-11T01:14:08.205Z">
+<meta property="og:updated_time" content="2019-12-11T01:20:37.627Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="lktiger的博客" type="application/atom+xml">
@@ -256,6 +256,7 @@
 <p>好事多磨，执行上面的命令之后，你发现你还将其他开发者的<strong>src/main/java/util/c.java</strong>文件不小心修改了，并且已经提交！wtf？你心想还好没有推送到远程仓库，马上执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span></pre></td></tr></table></figure>
 
+<p>成功回退到上一个版本。</p>
 <blockquote>
 <ul>
 <li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<code>~</code>和版本数字，如上100个版本写成<code>HEAD~100</code> </p>
@@ -267,7 +268,7 @@
 </li>
 </ul>
 </blockquote>
-<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，心想：删掉这个文件就可以了：</p>
+<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，微微一笑：远程仓库删掉这个文件就可以了：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git rm src/main/webapp/d.txt</span></pre></td></tr></table></figure>
 
 <blockquote>

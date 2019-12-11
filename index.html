@@ -254,6 +254,7 @@
 <p>好事多磨，执行上面的命令之后，你发现你还将其他开发者的<strong>src/main/java/util/c.java</strong>文件不小心修改了，并且已经提交！wtf？你心想还好没有推送到远程仓库，马上执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span></pre></td></tr></table></figure>
 
+<p>成功回退到上一个版本。</p>
 <blockquote>
 <ul>
 <li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<code>~</code>和版本数字，如上100个版本写成<code>HEAD~100</code> </p>
@@ -265,7 +266,7 @@
 </li>
 </ul>
 </blockquote>
-<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，心想：删掉这个文件就可以了：</p>
+<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，微微一笑：远程仓库删掉这个文件就可以了：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git rm src/main/webapp/d.txt</span></pre></td></tr></table></figure>
 
 <blockquote>
