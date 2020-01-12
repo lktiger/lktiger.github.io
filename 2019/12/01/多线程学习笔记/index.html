@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>lktiger的博客</title>
+  <title>多线程学习笔记 | lktiger的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="lktiger的博客">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
+  <meta name="description" content="本文转载自廖雪峰大佬的的网站，加上一些自己的理解。 链接地址： https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1252599548343744&#x2F;1255943750561472  线程的状态一个线程对象只能调用一次start()方法启动新线程，并在新线程中执行run()方法。一旦run()方法执行完毕，线程就结束了。因此，Java线程的状态有以下几种：  New：新创建的线程，">
+<meta name="keywords" content="Thread">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程学习笔记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;01&#x2F;%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="lktiger的博客">
+<meta property="og:description" content="本文转载自廖雪峰大佬的的网站，加上一些自己的理解。 链接地址： https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1252599548343744&#x2F;1255943750561472  线程的状态一个线程对象只能调用一次start()方法启动新线程，并在新线程中执行run()方法。一旦run()方法执行完毕，线程就结束了。因此，Java线程的状态有以下几种：  New：新创建的线程，">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-01-12T14:56:15.688Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="lktiger的博客" type="application/atom+xml">
@@ -141,153 +145,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-聊聊js的执行机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-多线程学习笔记" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/05/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">聊聊js的执行机制</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/05/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2019-12-05T07:01:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>注：本文通过一部分网上博客内容总结，再加上自己的理解而来，如有不对或不清楚的地方，欢迎斧正</p>
-</blockquote>
-<p>参考文章链接： </p>
-<p><a href="https://juejin.im/post/5b498d245188251b193d4059" target="_blank" rel="noopener">https://juejin.im/post/5b498d245188251b193d4059</a></p>
-<p><a href="https://juejin.im/post/5db556376fb9a0207a6ddce7" target="_blank" rel="noopener">https://juejin.im/post/5db556376fb9a0207a6ddce7</a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前对于js的执行机制并没有什么细致的了解，自以为代码从上到下执行，同步异步分开，其他没有什么值得探寻的。后来仔细研究了一下，发现还是暗藏玄机啊。嗯，下面谈谈自己的理解。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>话不多说，咱们先来看一段代码，说出以下代码的打印顺序：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> async2();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">async1();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">6</span>);</span></pre></td></tr></table></figure>
-
-<p>正确的答案是依次打印 1,2,6,4,3,5 ，如果你的答案是正确的，那么你已经理解本文接下来的内容了，也就不必浪费时间阅读这篇文章了。</p>
-<p>关于js执行机制，先要从同步和异步说起。</p>
-<hr>
-<h3 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h3><p><strong>同步</strong>的概念很好理解，用函数来举例的话，如果一个函数在返回的时候，调用者就能够得到预期的结果，那么这个函数就是同步的。</p>
-<p>举个例子：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().getTime()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>)</span></pre></td></tr></table></figure>
-
-<ul>
-<li>第一句代码返回时拿到了返回值毫秒数，得到了预期的结果，是同步的。</li>
-<li>第二局代码在控制台打印1，也得到了预期的效果，是同步的。</li>
-</ul>
-<p>类比<strong>同步</strong>的话，<strong>异步</strong>也就很好理解了，如果函数返回的时候，调用者并不能够拿到预期的结果，而是要在将来通过其他的一些手段来得到（如回调函数），那么这个函数就是<strong>异步</strong>的。</p>
-<p>例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;,<span class="number">2000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    url:www.baidu.com,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    data:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    success:<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="built_in">console</span>.log(<span class="string">'success'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
-
-<p>代码1-3行是一个定时器，延时2秒打印数字1，在执行返回的时候并不能立刻打印，显然是异步的。下面的代码是一个简单的ajax请求，在发送请求之后并不会得到预期结果，请求的发送和处理需要时间，我们也不知道这个请求是成功还是失败，只能通过回调函数使之在成功的时候打印字符串，也是异步的。</p>
-<p><strong>那么js是怎么执行同步和异步任务的呢？</strong></p>
-<p>如下图：</p>
-<p><img src="/2019/12/05/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5.png" alt="同步异步"></p>
-<ul>
-<li>同步任务和异步任务是在不同的环境执行的，同步任务在主线程执行，异步任务进入Event Table并注册它的回调函数。看到这里可能有人比较疑惑，js不是单线程的吗，这个主线程是啥意思啊？我们都知道js是运行在浏览器中的语言，而浏览器是多进程的，js引擎线程运行在其中的渲染进程，这个进程除了js引擎线程之外，还包括了GUI渲染线程、事件触发线程、定时触发器线程以及异步http请求线程，<strong>所谓的单线程，实际是指js引擎中负责解释和执行js代码的线程只有一个，称之为主线程</strong>。</li>
-<li>在异步任务完成后，此时它的回调函数并没有执行，而是被放入Event Queue中等待同步任务执行完成之后才会按顺序进入主线程执行。</li>
-<li>这个过程不断重复，称之为事件循环(Event Loop)。</li>
-</ul>
-<p>来看个代码吧：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;,<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>)</span></pre></td></tr></table></figure>
-
-<p>这段代码的打印顺序是1，0</p>
-<p>你可能会不明白<code>setTimeout(fn,0)</code>的含义，延时0秒难道不是马上执行吗？实际上从上述对图片的解读已经可以得出答案：<code>setTimeout(fn,0)</code>在延时0秒后将函数<code>fn</code>放入Event Queue中，接下来会等待同步任务<code>console.log(1)</code>执行完成之后才会执行Event Queue中的回调函数，打印数字0</p>
-<p>那么现在你已经对js的执行顺序有了初步了解。</p>
-<hr>
-<h3 id="微任务-Microtasks-和宏任务-Macrotask"><a href="#微任务-Microtasks-和宏任务-Macrotask" class="headerlink" title="微任务(Microtasks)和宏任务(Macrotask)"></a>微任务(Microtasks)和宏任务(Macrotask)</h3><p>首先明确这俩都是异步任务，区别在于执行顺序，话不多说直接看图：</p>
-<p><img src="/2019/12/05/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E5%AE%8F%E4%BB%BB%E5%8A%A1.png" alt="微任务宏任务"></p>
-<p>在分析的时候可以将回调函数与任务本身区别开来，如上图所示，在异步任务中先执行宏任务（注意此时宏任务的回调函数并没有执行，而是被注册到Event Queue），然后执行所有的微任务（清空微任务队列，包括被注册到Event Queue的回调函数，注意微任务的队列和宏任务的队列并不是同一个），然后再执行宏任务的回调，如此循环下去。</p>
-<blockquote>
-<p><em>常见的宏任务：异步的整体代码script、setTimeout、setInterval、setImmediate。</em></p>
-<p><em>常见的微任务：原生Promise、process.nextTick、MutationObserver。</em></p>
-</blockquote>
-<p>如果再将同步考虑进来的话，那么执行顺序就是</p>
-<ul>
-<li>同步任务（同步任务执行的同时异步任务也在异步请求线程执行，先执行宏任务再执行微任务）</li>
-<li>微任务的回调（宏任务执行完成之后要清空微任务队列）</li>
-<li>宏任务的回调</li>
-</ul>
-<p>如此往复循环下去。</p>
-<p>还是再看个代码吧：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;,<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise1'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  resolve()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">p.then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise2'</span>)    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">123</span>)</span></pre></td></tr></table></figure>
-
-<p><strong>这个例子的打印顺序是Promise1，123，Promise2，setTimeout1</strong></p>
-<p>上面的代码涉及到Promise的一个知识点： <strong>Promise 一经创建就会立即执行</strong>。这样看来Promise()内部的代码就相当于是同步了，而then()内部的代码仍然是异步（微任务）。</p>
-<p>因此，首先打印Promise1，然后执行同步任务，打印123，接下来setTimeout()的回调函数setTimeout1被放入宏任务的任务队列，Promise的回调函数函数Promise2被放入微任务的任务队列，然后清空微任务队列，打印Promise2，最后打印setTimeout1。</p>
-<p>至此，js的执行机制也解释的差不多了，再回去看看文章开头那个问题呢？</p>
-<p>只需要注意async返回的是一个Promise，await后面的代码从下一句开始相当于放在Promise的then()中执行。</p>
-<p>相信你一定能得出正确答案。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/05/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-多线程学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/01/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">多线程学习笔记</a>
+    <h1 class="article-title" itemprop="name">
+      多线程学习笔记
     </h1>
   
 
@@ -439,6 +304,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -457,16 +343,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/01/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/01/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/12/05/%E8%81%8A%E8%81%8Ajs%E7%9A%84%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          聊聊js的执行机制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/18/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring-Boot学习笔记（二）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -486,485 +440,14 @@
 
 
 
-
   
-    <article id="post-Spring-Boot学习笔记（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/18/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">Spring-Boot学习笔记（二）</a>
-    </h1>
   
 
-        
-        <a href="/2019/11/18/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2019-11-18T09:13:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-配置文件"><a href="#1-配置文件" class="headerlink" title="1.配置文件"></a>1.配置文件</h2><p>SpringBoot使用一个全局配置文件，配置名称是固定的；</p>
-<ul>
-<li>application.properties</li>
-<li>application.yml</li>
-</ul>
-<p>配置文件的作用：修改SpringBoot自动配置的默认值；</p>
-<p>yml即YAML（YAML Ain’t Markup Language）</p>
-<p>标记语言：</p>
-<p>​        以前的配置文件；大多都使用xml；而YAML<strong>以数据为中心</strong>，比json、xml等更适合做配置文件；</p>
-<h2 id="2-YAML语法"><a href="#2-YAML语法" class="headerlink" title="2.YAML语法"></a>2.YAML语法</h2><h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1.基本语法"></a>1.基本语法</h3><p>key:(空格)value —— 表示一对键值对；</p>
-<p>以空格的缩进来控制层级关系；只要是左对齐的一列数据都是同一层级的；</p>
-<p>属性和值是大小写敏感的；</p>
-<h3 id="2-值的写法"><a href="#2-值的写法" class="headerlink" title="2.值的写法"></a>2.值的写法</h3><h4 id="字面量：普通的值（数字，字符串，布尔）："><a href="#字面量：普通的值（数字，字符串，布尔）：" class="headerlink" title="字面量：普通的值（数字，字符串，布尔）："></a>字面量：普通的值（数字，字符串，布尔）：</h4><ul>
-<li>直接按照基本语法写</li>
-<li>字符串默认不加单引号或者双引号</li>
-<li>双引号：不会转义字符串里面的特殊字符，即特殊字符会作为本身想表示的意思</li>
-<li>单引号：会转义特殊字符，即特殊字符会被转为普通的字符串</li>
-</ul>
-<h4 id="对象、Map（属性和值）（键值对）："><a href="#对象、Map（属性和值）（键值对）：" class="headerlink" title="对象、Map（属性和值）（键值对）："></a>对象、Map（属性和值）（键值对）：</h4><ul>
-<li><p>可以按照基本语法写，也可以用行内写法：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span> <span class="string">&#123;lastName:</span> <span class="string">zhangsan,age:</span> <span class="number">12</span><span class="string">&#125;</span></span></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="数组（List、Set）："><a href="#数组（List、Set）：" class="headerlink" title="数组（List、Set）："></a>数组（List、Set）：</h4><ul>
-<li><p>用短横线-（空格）连接值表示数组中的一个元素</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> <span class="bullet">-</span> <span class="string">cat</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"> <span class="bullet">-</span> <span class="string">dog</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> <span class="bullet">-</span> <span class="string">pig</span></span></pre></td></tr></table></figure>
-</li>
-<li><p>行内写法：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span> <span class="string">[cat,dog,pig]</span></span></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="3-配置文件值注入"><a href="#3-配置文件值注入" class="headerlink" title="3.配置文件值注入"></a>3.配置文件值注入</h3><p>配置文件</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">person:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">lastName:</span> <span class="string">zhangsan</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">age:</span> <span class="number">18</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">boss:</span> <span class="literal">false</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">birth:</span> <span class="number">2019</span><span class="string">/1/5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">maps:</span> <span class="string">&#123;k1:</span> <span class="string">v1,k2:</span> <span class="number">12</span><span class="string">&#125;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">lists:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="bullet">-</span> <span class="string">wangwu</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="bullet">-</span> <span class="string">zhaoliu</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="attr">dog:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">name:</span> <span class="string">pappy</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">age:</span> <span class="number">2</span></span></pre></td></tr></table></figure>
-
-<p>javaBean:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment"> * <span class="doctag">@ConfigurationProperties</span> 告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment"> * prefix：前缀</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment"> * 只有这个组件是容器中的组件，才能使用使用<span class="doctag">@ConfigurationProperties</span>功能，因此使用<span class="doctag">@Component</span>将该类加入到容器中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment"> */</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"person"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> String lastName;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> Integer age;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> Boolean boss;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> Date birth;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> Map&lt;String,Object&gt; maps;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> List&lt;Object&gt; lists;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> Dog dog;</span></pre></td></tr></table></figure>
-
-<p>我们可以导入配置文件处理器，以后编写配置就有提示了：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--导入配置文件处理器，配置文件进行绑定就会有提示--&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></pre></td></tr></table></figure>
-
-<p>gradle4.6及以上的写法：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	annotationProcessor <span class="string">"org.springframework.boot:spring-boot-configuration-processor"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Spring Boot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/18/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Spring-Boot学习笔记（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/10/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">Spring Boot学习笔记（一）</a>
-    </h1>
   
 
-        
-        <a href="/2019/11/10/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2019-11-10T09:09:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-启动器"><a href="#1-启动器" class="headerlink" title="1.启动器"></a>1.启动器</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></pre></td></tr></table></figure>
-
-<p><strong>spring-boot-starter-web</strong>：</p>
-<p>​        spring-boot-starter ：spring-boot场景启动器；帮我们导入了web模块正常运行所依赖的组件；</p>
-<p>Spring Boot将所有功能场景都抽取出来，做成一个个的starters，只需要在项目里面引入这些starter相关场景的所有以来都会导入进来。</p>
-<h3 id="2-主程序类，主入口类"><a href="#2-主程序类，主入口类" class="headerlink" title="2.主程序类，主入口类"></a>2.主程序类，主入口类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment"> * <span class="doctag">@SpringBootApplication</span> 标注一个主程序类，说明这是一个Spring Boot应用</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment"> */</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloDemoApplication</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">//Spring应用启动起来</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        SpringApplication.run(HelloDemoApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<p><strong>@SpringBootApplication</strong>：说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Inherited</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableAutoConfiguration</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">		<span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter<span class="class">.<span class="keyword">class</span>),</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class">		@<span class="title">Filter</span>(<span class="title">type</span> </span>= FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter<span class="class">.<span class="keyword">class</span>) &#125;)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">SpringBootApplication</span> </span>&#123;</span></pre></td></tr></table></figure>
-
-<ol>
-<li><strong>@SpringBootConfiguration</strong>：SpringBoot的配置类；<ul>
-<li><strong>@Configuration</strong>：配置类上来标注这个注解；</li>
-</ul>
-</li>
-</ol>
-<p>​                配置类 —— 配置文件；配置类也是容器中的一个组件；@Component</p>
-<ol start="2">
-<li><p><strong>@EnableAutoConfiguration</strong>：开启自动配置功能；</p>
-<p>以前我们需要配置的东西，SpringBoot帮我们自动配置；<strong>@EnableAutoConfiguration</strong>告诉SpringBoot开启自动配置功能；这样自动配置才能生效；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoConfigurationPackage</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import</span>(AutoConfigurationImportSelector<span class="class">.<span class="keyword">class</span>)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">EnableAutoConfiguration</span> </span>&#123;</span></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong>@AutoConfigurationPackage</strong>：自动配置包</p>
-<ul>
-<li><p><strong>@Import</strong>(AutoConfigurationPackages.Registrar.class)：Spring的底层注解@Import，给容器中导入一个组件；导入的组件由AutoConfigurationPackages.Registrar.class来指定；</p>
-<p><u><strong><em>将主配置类（@SpringBootApplication标注的类）的所在包以及下面的所有子包里面的所有组件扫描到Spring容器；</em></strong></u></p>
-</li>
-</ul>
-</li>
-<li><p><strong>@Import(AutoConfigurationImportSelector.class)</strong></p>
-<p>​    AutoConfigurationImportSelector：导入哪些组件的选择器；</p>
-<p>​    将所有需要导入的组件以全类名的方式返回；这些组件就会被添加到容器中；</p>
-<p>​    会给容器中导入非常多的自动配置类（xxxAutoConfiguration），也就是给容器中导入这个场景需要的所有组件，并配置好这些组件；</p>
-<p><img src="/2019/11/10/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E7%B1%BB.png" alt="自动配置类"></p>
-<p>​    有了自动配置类，免去了我们手动编写配置注入功能组件等的工作。</p>
-<p>​    SpringFactoriesLoader.loadFactoryNames(EnableAutoConfiguration.class,classLoader)；</p>
-<p>​    <strong>SpringBoot在启动的时候从类路径下的META-INF/spring.factories中获取EnableAutoConfiguration指定的值，将这些值作为自动配置类导入到容器中，自动配置类就生效，帮我们进行自动配置工作。</strong></p>
-<p>​    J2EE的整体整合解决方案和自动配置都在spring-boot-autoconfigure-xxx.RELEASE.jar里面；</p>
-</li>
-</ul>
-</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Spring Boot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/10/Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-git的常用命令总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/">git的常用命令总结</a>
-    </h1>
   
 
-        
-        <a href="/2019/10/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2019-10-09T03:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为目前世界上最先进的分布式版本控制系统，Git可以说是大名鼎鼎，并且还在逐渐扩大它的影响力，可以说是我们必须要掌握的工具之一。</p>
-<p>本文通过开发过程中的场景对Git的常用命令进行总结。</p>
-<blockquote>
-<p><strong><em>本文所用Git版本：git version 2.22.0.windows.1</em></strong></p>
-</blockquote>
-<h2 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h2><p>一个阳光明媚的上午，你正在办公室里愉快地摸鱼的时候，突然收到领导发来的信息：小张啊，最近XX项目时间比较紧，你去救救急，先把<strong><a href="https://helloworld.git" target="_blank" rel="noopener">https://helloworld.git</a></strong>主机上的<strong><code>dev</code></strong>分支clone下来！</p>
-<p>你收到消息之后虽然忍不住口吐芬芳：我fffff…佛慈悲，但还是乖乖的打开git bash，心想：这个简单，分分钟搞定：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> -b dev https://helloworld.git</span></pre></td></tr></table></figure>
-
-<p>可你虽然想的是对的，但是输入的时候情不自禁地又去想到刚才摸鱼的事，思绪飞到了九霄云外，不小心习惯性的输入了：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://helloworld.git</span></pre></td></tr></table></figure>
-
-<p>并且执行了，克隆下来一个helloworld文件夹。</p>
-<blockquote>
-<p>当你从远程仓库克隆时，实际上Git自动把本地的分支和远程的分支关联起来了，并且远程仓库的默认名称是<code>origin</code> </p>
-</blockquote>
-<p>等你反应过来的时候，心想：多大点事儿，<code>master</code>分支克隆下来也无妨，再把<code>dev</code>分支克隆下来就行了：</p>
-<blockquote>
-<p>注意：此时已经克隆下来了一个文件夹，因此该文件夹才是一个Git仓库，你需要进入该文件夹下进行克隆分支的操作。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> helloworld</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
-
-<blockquote>
-<p>只要是远程存在的分支，克隆下来之后执行上面的<code>git checkout</code>指令不但可以在本地创建同名分支并自动与远程对应分支关联，而且会切换到该分支（默认是在<code>master</code>分支）。</p>
-<p>以下通过先建本地仓库，再关联远程仓库的方式实现另一种克隆项目的方法：</p>
-<p>先初始化一个本地仓库：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git init</span></pre></td></tr></table></figure>
-
-<p>关联在github上创建的远程仓库：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git remote add origin https://github.com/aaa/helloworld.git</span></pre></td></tr></table></figure>
-
-<p>然后拉取代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
-
-<p>执行了上面这一步之后，当你用<code>git branch</code>查看分支的时候却发现一个分支都没有（wtf??），但实际上origin主机上的所有分支都被克隆下来了（当然由于是新建的仓库，只有master分支），不信你可以切换过去看看：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout master</span></pre></td></tr></table></figure>
-
-<p>这时候再执行<code>git branch</code>，是不是能看到分支了？</p>
-</blockquote>
-<p>这时候你的领导觉得这个项目确实比较紧，于是让你的一个同事过来和你一起开发，然后你的同事在<code>dev</code>分支上新建了一个<code>feature-1</code>分支并推送到了远程：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push -u origin feature-1</span></pre></td></tr></table></figure>
-
-<blockquote>
-<p>小伙伴们在github上自己建仓库练习克隆分支的时候，需要确保你本地的分支被推送到了远程（执行上面的命令），然后再新建一个文件夹将远程仓库克隆下来。</p>
-</blockquote>
-<p>于是你要把这个<code>feature-1</code>分支抓取下来，并和本地的<code>feature-1</code>分支关联上，怎么做呢？</p>
-<p>有以下2种方法：</p>
-<ol>
-<li><p><strong>先把最新的提交拉下来</strong>（这一步非常重要）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
-
-<p>然后切换并关联分支：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout feature-1</span></pre></td></tr></table></figure>
-
-<p>是不是很熟悉呢？没错，之前克隆的时候用过这命令，可以自动关联相应的分支。</p>
-</li>
-<li><p>同样地，先将最新提交拉取下来：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
-
-<p>建一个分支并切换过去（注意是在<code>dev</code>分支上执行这个命令，要和远程的分支结构一致）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-1</span></pre></td></tr></table></figure>
-
-<p>然后关联本地和远程分支：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch --<span class="built_in">set</span>-upstream-to origin/feature-1 feature-1</span></pre></td></tr></table></figure>
-
-<p>然后拉取feature-1分支上的代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git pull</span></pre></td></tr></table></figure>
-
-
-
-</li>
-</ol>
-<h2 id="管理修改与版本回退"><a href="#管理修改与版本回退" class="headerlink" title="管理修改与版本回退"></a>管理修改与版本回退</h2><p>OK！到这一步分支就克隆下来了，你兴冲冲地开始开发，搞定之后，你正想添加到暂存区，但是由于你之前又去想摸鱼的事情，突然发现不小心把其他开发者的<strong>src/main/java/util/a.java</strong>文件修改乱了（或者删掉了），然而你走路嚣张，丝毫不慌：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -- src/main/java/util/a.java</span></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>上面这条命令的作用就是让<code>a.java</code>回到最近一次<code>git commit</code>或<code>git add</code>时的状态</strong> </p>
-</blockquote>
-<p>执行之后你发现<strong><code>a.java</code></strong>文件回来了，于是你放心地将所有新增和修改添加到暂存区：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git add .</span></pre></td></tr></table></figure>
-
-<p>然而俗话说得好：摸鱼一时爽，一直摸鱼一直爽。</p>
-<p>上面的命令执行完之后你发现之前还有个其他开发者的<strong>src/main/java/util/b.java</strong>文件被你修改乱了，并且添加到了暂存区！于是你赶紧执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset HEAD src/main/java/util/b.java</span></pre></td></tr></table></figure>
-
-<p>将<strong><code>b.java</code></strong>文件在暂存区的修改撤销掉，然后再执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -- src/main/java/util/b.java</span></pre></td></tr></table></figure>
-
-<p>撤销工作区的修改。完成之后你长舒一口气，这下总可以提交了吧？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"本次提交注释信息"</span></span></pre></td></tr></table></figure>
-
-<p>好事多磨，执行上面的命令之后，你发现你还将其他开发者的<strong>src/main/java/util/c.java</strong>文件不小心修改了，并且已经提交！wtf？你心想还好没有推送到远程仓库，马上执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span></pre></td></tr></table></figure>
-
-<p>成功回退到上一个版本。</p>
-<blockquote>
-<ul>
-<li><p>在 Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，也可以在HEAD后面加上<code>~</code>和版本数字，如上100个版本写成<code>HEAD~100</code> </p>
-</li>
-<li><p>有时候提交的版本有点多你并不知道需要回退到哪个版本，可以通过<code>git log</code>查看提交历史，复制版本号前几位，如<strong>b354h</strong>，然后执行：</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git reset --hard b354h</span></pre></td></tr></table></figure>
-</li>
-<li><p>Git在回退之后也可以重返到未回退之前的版本，可以通过<code>git reflog</code>查看命令历史，同样的复制版本号前几位，执行上面的命令即可。</p>
-</li>
-</ul>
-</blockquote>
-<p>终于回退到上一个版本！然而成功的路上总是充满了坎坷，你发现项目中一个不需要的文件<strong>src/main/webapp/d.txt</strong>被提交到了远程仓库，微微一笑：远程仓库删掉这个文件就可以了：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git rm src/main/webapp/d.txt</span></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：上面的命令只是将要删掉文件这一步添加到暂存区，还未提交之前文件并没有从远程仓库删除</p>
-</blockquote>
-<p>虽然你想的是挺美的，但是摸鱼使你眼神飘忽，不小心把<strong>d.txt</strong>打成了<strong>e.txt</strong>，于是将删除<strong>e.txt</strong>添加到了暂存区。怎么撤销暂存区的修改呢？前面有这条命令哦。</p>
-<p>当然，最后你还是不小心提交了（摸鱼嘛，你懂的），这时候参考版本回退的命令就可以了。</p>
-<h2 id="关于分支"><a href="#关于分支" class="headerlink" title="关于分支"></a>关于分支</h2><p>你正在风风火火地进行开发，然而你的领导突然又发来一条信息：小张啊，这个项目另一个地方有个bug需要紧急修改一下，今天之内必须搞定，你手里的开发工作先放一下，先把bug改了！</p>
-<p>于是你心里顿时一万头神兽在奔腾，手里的工作刚进行到一半，功能没完成，提交也不太好，不提交又不能切换分支，怎么办呢？</p>
-<blockquote>
-<p>tips:</p>
-<p>之前已经提到了创建并切换到分支<strong><code>dev</code></strong>的命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b dev</span></pre></td></tr></table></figure>
-
-<p>上面的命令相当于2条命令：</p>
-<ul>
-<li>创建分支：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch dev</span></pre></td></tr></table></figure>
-
-<ul>
-<li>切换分支：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout dev</span></pre></td></tr></table></figure>
-
-<p>如果要查看分支，执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch</span></pre></td></tr></table></figure>
-
-<p>如果要将<strong><code>dev</code></strong>分支合并到<strong><code>master</code></strong>分支上，先切换到<strong><code>master</code></strong>分支，再使用merge合并：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout master</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ git merge dev</span></pre></td></tr></table></figure>
-
-<p>删除分支：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch -d dev</span></pre></td></tr></table></figure>
-
-<p>强制删除分支（在分支未合并的时候就删除）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git branch -D dev</span></pre></td></tr></table></figure>
-
-<p>上面2条命令是删除本地分支，若要删除远程分支：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git push --delete origin dev</span></pre></td></tr></table></figure>
-</blockquote>
-<p>幸好啊，Git有一个<code>stash</code>功能，可以将你的工作现场保存起来，这样你就可以新建一个分支去处理bug了！</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash</span></pre></td></tr></table></figure>
-
-<p>执行后用<code>git status</code>查看工作区，发现已经是干净的了！于是在<code>dev</code>分支创建临时分支<code>issue-1</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git checkout -b issue-1</span></pre></td></tr></table></figure>
-
-<p>然后修改完成，执行提交并合并分支之后，是时候回到<code>dev</code>分支继续刚才的工作了！</p>
-<p>查看工作现场：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash list</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">stash@&#123;0&#125;: WIP on dev: s02ec7 solve bug</span></pre></td></tr></table></figure>
-
-<p>恢复工作现场有2中方法：</p>
-<ul>
-<li>用<code>git stash apply</code>，恢复之后stash的内容并不删除，通过<code>git stash drop</code>手动删除</li>
-<li>用<code>git stash pop</code>，恢复的同时删除stash的内容</li>
-</ul>
-<p>如果多次stash，可以指定恢复的工作现场：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ git stash apply stash@&#123;0&#125;</span></pre></td></tr></table></figure>
-
-<p>历经千辛万苦，终于开发完了！你长舒一口气~~</p>
-<p>嗯，是时候继续摸鱼了。</p>
-<p>文 | lktiger 原创</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/09/git%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -987,8 +470,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
